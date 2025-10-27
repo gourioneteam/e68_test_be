@@ -12,7 +12,7 @@ const cookieParser=require('cookie-parser')
 //   optionsSuccessStatus: 200 
 // }
 app.use(cors({
-  origin: 'http://localhost:5173', // ✅ frontend URL (Vite default port)
+  origin: ['https://e68-test-frontend.vercel.app/','http://localhost:5173'], // ✅ frontend URL (Vite default port)
   credentials: true                // ✅ allow cookies / tokens
 }));
 app.use(cookieParser())
