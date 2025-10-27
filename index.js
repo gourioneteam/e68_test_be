@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 })
 
 console.log("start")
-app.use('/api/', authroutes)
+app.use('/api', authroutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`listening at port ${process.env.PORT}`)
