@@ -10,13 +10,33 @@ const cookieParser = require('cookie-parser')
 const allowedOrigin = "https://e68-test-frontend.vercel.app";
 
 // CORS configuration
+// app.use(cors({
+//   origin: allowedOrigin,
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+// }));
+const allowedOrigins = [
+  "https://e68-test-frontend.vercel.app",
+  "http://localhost:5173", // for local development
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: allowedOrigin,
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
-
 app.use(cookieParser())
 app.use(express.json())
 
